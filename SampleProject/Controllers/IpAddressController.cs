@@ -13,15 +13,13 @@ namespace SampleProject.Controllers
 
         public IpAddressController(IIpLookupServiceFactory ipLookupServiceFactory)
         {
-            _ipLookupService = ipLookupServiceFactory.CreateIpLookupService("lookup");
+            _ipLookupService = ipLookupServiceFactory.CreateIpLookupService(IpLookupServiceType.Database);
         }
 
         // GET: api/ipaddress/{ip}
         [HttpGet("{ip}")]
         public async Task<ActionResult<IpAddress>> GetIpAddressByIp(string ip)
         {
-            var cacheKey = $"IpAddress_{ip}";
-            
             if (!IsValidIpAddress(ip))
             {
                 return BadRequest("Invalid IP address format.");
@@ -39,10 +37,10 @@ namespace SampleProject.Controllers
 
         private bool IsValidIpAddress(string ip)
         {
-            string ipv4Pattern = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\." +
-                                @"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\." +
-                                @"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\." +
-                                @"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
+            string ipv4Pattern = @"^(?!0{2,})([1-9][0-9]?|1[0-9]{2}|2[0-4][0-9]|25[0-5]|0)\." +
+                                 @"([1-9][0-9]?|1[0-9]{2}|2[0-4][0-9]|25[0-5]|0)\." +
+                                 @"([1-9][0-9]?|1[0-9]{2}|2[0-4][0-9]|25[0-5]|0)\." +
+                                 @"([1-9][0-9]?|1[0-9]{2}|2[0-4][0-9]|25[0-5]|0)$";
 
             return Regex.IsMatch(ip, ipv4Pattern);
         }

@@ -11,9 +11,9 @@ namespace SampleProject.Services
 			_externalIpLookupService = externalIpLookupService;
 		}
 
-		public IIpLookupService CreateIpLookupService(string serviceType)
+		public IIpLookupService CreateIpLookupService(IpLookupServiceType serviceType)
 		{
-			if (serviceType == "external")
+			if (serviceType == IpLookupServiceType.External)
 			{
 				return _externalIpLookupService;
 			}

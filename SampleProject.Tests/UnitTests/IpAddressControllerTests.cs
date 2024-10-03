@@ -16,7 +16,7 @@ namespace SampleProject.Tests.UnitTests
 		{
 			_ipLookupServiceFactoryMock = new Mock<IIpLookupServiceFactory>();
 			_ipLookupServiceMock = new Mock<IIpLookupService>();
-			_ipLookupServiceFactoryMock.Setup(f => f.CreateIpLookupService(It.IsAny<string>())).Returns(_ipLookupServiceMock.Object);
+			_ipLookupServiceFactoryMock.Setup(f => f.CreateIpLookupService(It.IsAny<IpLookupServiceType>())).Returns(_ipLookupServiceMock.Object);
 			_controller = new IpAddressController(_ipLookupServiceFactoryMock.Object);
 		}
 
